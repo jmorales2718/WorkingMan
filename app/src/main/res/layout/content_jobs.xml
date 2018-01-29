@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="10"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        >
+        <ImageButton
+            android:id="@+id/ibPrevious"
+            android:contentDescription="@string/ibPreviousCD"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_chevron_left_black_24dp"
+            android:background="@android:color/white"
+            android:tint="@color/darkGrey"
+            />
+
+        <TextView
+            android:id="@+id/tvSelectedDay"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:text="@string/tvSelectedDayText"
+            android:textSize="24sp"
+            android:textColor="@color/darkGrey"
+            android:gravity="center"
+            />
+
+        <ImageButton
+            android:id="@+id/ibNext"
+            android:contentDescription="@string/ibNextCD"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_chevron_right_black_24dp"
+            android:background="@android:color/white"
+            android:tint="@color/darkGrey"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/line_separator_thicker"
+        android:layerType="software"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerJobs"
+        android:layout_width="match_parent"
+        android:background="@android:color/white"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        />
+
+    <TextView
+        android:id="@+id/tvWeeklyTotal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="@string/tvWeeklyTotalText"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:layout_weight="1"
+        />
+
+    <!--android:paddingLeft="10dp"-->
+    <!--android:paddingStart="10dp"-->
+
+
+</LinearLayout>

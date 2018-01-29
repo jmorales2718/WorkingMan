@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WorkingMan</string>
+    <string name="etJobNameHint">Job Name</string>
+    <string name="etHoursWorkedHint">Hours Worked</string>
+    <string name="etDollarsPerHourHint">Hourly Pay</string>
+    <string name="tvJobNameText">Job:</string>
+    <string name="tvHoursWorkedText">Hours Worked:</string>
+    <string name="ibDeleteCD">Delete Button for Job Rows</string>
+    <string name="ibPreviousCD">Previous</string>
+    <string name="tvSelectedDayText">DefaultDayOfWeek</string>
+    <string name="ibNextCD">Next</string>
+    <string name="tvWeeklyTotalText">Weekly Total: $0</string>
+    <string name="mAddJobTitle">AddJob</string>
+    <string name="mbDeleteAllTitle">RemoveJobs</string>
+</resources>
