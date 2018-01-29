@@ -3,12 +3,9 @@ package jmmacbook.android.workingman.data;
 import android.content.Context;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
-import jmmacbook.android.workingman.HoursActivity;
 import jmmacbook.android.workingman.adapter.JobsAdapter;
 
 /**
@@ -16,30 +13,25 @@ import jmmacbook.android.workingman.adapter.JobsAdapter;
  */
 
 public class Week
-    implements Serializable
-{
+        implements Serializable {
     private Calendar c = Calendar.getInstance();
     private Context context;
 
     private Day[] daysWeek;
-    public static final int DAYSOFWEEK = 7;
+    public static final int DAYS_OF_WEEK = 7;
 
-    public Week(Context context)
-    {
+    public Week(Context context) {
         this.context = context;
         daysWeek = getWeek();
     }
 
     /**
-     * Is used to find the current week at return user will have an array
-     * of Strings of all the Days of the Current Week.
-     *
-     * @return
+     * Is used to find the current week and create an array of strings that
+     * represent the days of the week
      */
 
-    private Day[] getWeek()
-    {
-        Day[] daysToReturn = new Day[DAYSOFWEEK];
+    private Day[] getWeek() {
+        Day[] daysToReturn = new Day[DAYS_OF_WEEK];
 
         int currentDay = c.get(Calendar.DAY_OF_WEEK);
         int currentMonth = c.get(Calendar.MONTH);
@@ -50,28 +42,25 @@ public class Week
         int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
         int currentYear = c.get(Calendar.YEAR);
         int posDif = Calendar.SATURDAY - currentDay;
-        int negDif = currentDay; //- Calendar.SUNDAY;
+        int negDif = currentDay;
 
         String day = "";
         Day dayForWeek;
         int i;
-        for (i = 0; i < posDif; i++)
-        {
+        for (i = 0; i < posDif; i++) {
             dayForWeek = new Day(context);
             int tempDay = 0;
             int tempDOM = 0;
             int tempMonth = 0;
             int nextDays = dayOfMonth + (posDif - i);
-            int nextDOW = DAYSOFWEEK - i;
+            int nextDOW = DAYS_OF_WEEK - i;
 
-            if (nextDays > daysInCurrent)
-            {
+            if (nextDays > daysInCurrent) {
                 int daysOver = nextDays - daysInCurrent;
                 tempDOM = daysOver;
                 tempMonth = nextMonth;
             }
-            else
-            {
+            else {
                 tempDOM = nextDays;
                 tempMonth = currentMonth;
             }
@@ -84,22 +73,18 @@ public class Week
             System.out.println(day);
 
         }
-        for (i = 0; i < negDif + 1; i++)
-        {
+        for (i = 0; i < negDif + 1; i++) {
             dayForWeek = new Day(context);
             int tempDay = 0;
             int tempDOM = 0;
             int tempMonth = 0;
-            int prevDays = dayOfMonth - (negDif - i)+1;
-            int prevDOW = currentDay - (negDif - i)+1;
-            if (prevDays < 1)
-            {
-                int daysUnder = daysInPrevious - prevDays;
-                tempDOM = daysUnder;
+            int prevDays = dayOfMonth - (negDif - i) + 1;
+            int prevDOW = currentDay - (negDif - i) + 1;
+            if (prevDays < 1) {
+                tempDOM = daysInPrevious - prevDays;
                 tempMonth = previousMonth;
             }
-            else
-            {
+            else {
                 tempDOM = prevDays;
                 tempMonth = currentMonth;
             }
@@ -113,24 +98,25 @@ public class Week
         return daysToReturn;
     }
 
-    private int getPreviousMonth(int currentMonth){
-        if(currentMonth == 0){
+    private int getPreviousMonth(int currentMonth) {
+        if (currentMonth == 0) {
             return 11;
-        }else{
-            return currentMonth-1;
+        }
+        else {
+            return currentMonth - 1;
         }
     }
 
-    private int getNextMonth(int currentMonth){
-        if(currentMonth == 12){
+    private int getNextMonth(int currentMonth) {
+        if (currentMonth == 12) {
             return 0;
-        }else{
-            return currentMonth+1;
+        }
+        else {
+            return currentMonth + 1;
         }
     }
 
-    private String getDayOfMonth(int dOMInt)
-    {
+    private String getDayOfMonth(int dOMInt) {
 
         String dayOfMonth;
         int dOM = dOMInt;
@@ -138,47 +124,37 @@ public class Week
         return dayOfMonth;
     }
 
-    private String getDayOfWeek(int dOWInt)
-    {
+    private String getDayOfWeek(int dOWInt) {
         String dayOfWeek;
         int dOW = dOWInt;
-        if (dOW == 1)
-        {
+        if (dOW == 1) {
             dayOfWeek = "Sunday";
         }
-        else if (dOW == 2)
-        {
+        else if (dOW == 2) {
             dayOfWeek = "Monday";
         }
-        else if (dOW == 3)
-        {
+        else if (dOW == 3) {
             dayOfWeek = "Tuesday";
         }
-        else if (dOW == 4)
-        {
+        else if (dOW == 4) {
             dayOfWeek = "Wednesday";
         }
-        else if (dOW == 5)
-        {
+        else if (dOW == 5) {
             dayOfWeek = "Thursday";
         }
-        else if (dOW == 6)
-        {
+        else if (dOW == 6) {
             dayOfWeek = "Friday";
         }
-        else
-        {
+        else {
             dayOfWeek = "Saturday";
         }
         return dayOfWeek;
     }
 
-    private String getMonthOfYear(int mOYInt)
-    {
+    private String getMonthOfYear(int mOYInt) {
         String monthOfYear = null;
         int mOY = mOYInt;
-        switch (mOY)
-        {
+        switch (mOY) {
             case 0:
                 monthOfYear = "January";
                 break;
@@ -219,23 +195,20 @@ public class Week
         return monthOfYear;
     }
 
-    private String getYear(int yInt)
-    {
+    private String getYear(int yInt) {
         String year;
         int y = yInt;
         year = String.valueOf(y);
         return year;
     }
 
-    public int getNumDaysInMonth(int month)
-    {
+    public int getNumDaysInMonth(int month) {
         int currentYear = 0;
         int currentDay = 0;
         Calendar temp;
         int monthOfYear = -1;
         int mOY = month;
-        switch (mOY)
-        {
+        switch (mOY) {
             case 0:
                 temp = new GregorianCalendar(currentYear, Calendar.JANUARY, currentDay);
                 monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
@@ -288,23 +261,19 @@ public class Week
         return monthOfYear;
     }
 
-    public Day getDay(int index)
-    {
+    public Day getDay(int index) {
         return daysWeek[index];
     }
 
-    public int currentDay()
-    {
+    public int currentDay() {
         return c.get(Calendar.DAY_OF_WEEK);
     }
 
-    public Day[] getDaysWeek()
-    {
+    public Day[] getDaysWeek() {
         return daysWeek;
     }
 
-    public void setDaysWeek(Day[] daysWeek)
-    {
+    public void setDaysWeek(Day[] daysWeek) {
         this.daysWeek = daysWeek;
     }
 }

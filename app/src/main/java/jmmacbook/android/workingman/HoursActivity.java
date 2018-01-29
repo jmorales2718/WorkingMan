@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
 import com.astuetz.PagerSlidingTabStrip;
 
 import jmmacbook.android.workingman.data.Day;
@@ -29,9 +30,7 @@ public class HoursActivity
         implements DaysFragment.OnWeekCreatedListener,
         DaysFragment.OnAdapterCreatedListener,
         DaysFragment.SendCalendarDateListener,
-        CalendarFragment.OnDateClickedListener
-{
-    public static String CALENDAR_DATE_STRING = "CALENDAR_DATE_STRING";
+        CalendarFragment.OnDateClickedListener {
 
     private HoursPagerAdapter hoursPagerAdapter;
     private ViewPager viewPager;
@@ -50,14 +49,12 @@ public class HoursActivity
     private Day selectedDay;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hours);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent));
 
         hoursPagerAdapter =
                 new HoursPagerAdapter(getSupportFragmentManager());
@@ -72,18 +69,15 @@ public class HoursActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.mbAddJob)
-        {
+        if (id == R.id.mbAddJob) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final LayoutInflater inflater = getLayoutInflater();
             final View layoutView = inflater.inflate(R.layout.dialog_layout, null);
@@ -96,11 +90,9 @@ public class HoursActivity
                     .setTitle("Add New Job")
                     .setIcon(android.R.drawable.ic_menu_add)
                     .setPositiveButton("Add Job", null)
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-                    {
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
+                        public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
                         }
                     });
@@ -114,9 +106,8 @@ public class HoursActivity
                             !etNewHoursWorked.getText().toString().equals("") &&
                             !etNewHourlyRate.getText().toString().equals("") &&
                             DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] +
-                            Short.parseShort(etNewHoursWorked.getText().toString())
-                            <= 24)
-                    {
+                                    Short.parseShort(etNewHoursWorked.getText().toString())
+                                    <= 24) {
                         newJobName = etNewJobName.getText().toString();
                         newHoursWorked = etNewHoursWorked.getText().toString();
                         newHourlyRate = etNewHourlyRate.getText().toString();
@@ -129,73 +120,67 @@ public class HoursActivity
                         selectedDay.getJAdapter().notifyDataSetChanged();
                         DaysFragment.updateTvWeeklyTotal(selectedDay.getJAdapter().getDays());
                         alertDialog.dismiss();
-                    }else if(etNewJobName.getText().toString().equals("") &&
+                    }
+                    else if (etNewJobName.getText().toString().equals("") &&
                             etNewHoursWorked.getText().toString().equals("") &&
-                            etNewHourlyRate.getText().toString().equals(""))
-                    {
+                            etNewHourlyRate.getText().toString().equals("")) {
                         etNewJobName.setError("Must enter a name");
                         etNewHoursWorked.setError("Must enter a number of hours worked");
                         etNewHourlyRate.setError("Must enter an hourly rate");
-                    }else if(etNewJobName.getText().toString().equals("") &&
-                            etNewHoursWorked.getText().toString().equals(""))
-                    {
+                    }
+                    else if (etNewJobName.getText().toString().equals("") &&
+                            etNewHoursWorked.getText().toString().equals("")) {
                         etNewJobName.setError("Must enter a name");
                         etNewHoursWorked.setError("Must enter a number of hours worked");
-                    }else if(etNewJobName.getText().toString().equals("") &&
-                            etNewHourlyRate.getText().toString().equals(""))
-                    {
+                    }
+                    else if (etNewJobName.getText().toString().equals("") &&
+                            etNewHourlyRate.getText().toString().equals("")) {
                         etNewJobName.setError("Must enter a name");
                         etNewHourlyRate.setError("Must enter an hourly rate");
-                    }else if(etNewHoursWorked.getText().toString().equals("") &&
-                            etNewHourlyRate.getText().toString().equals(""))
-                    {
+                    }
+                    else if (etNewHoursWorked.getText().toString().equals("") &&
+                            etNewHourlyRate.getText().toString().equals("")) {
                         etNewHoursWorked.setError("Must enter a number of hours worked");
                         etNewHourlyRate.setError("Must enter an hourly rate");
-                    }else if(etNewJobName.getText().toString().equals(""))
-                    {
+                    }
+                    else if (etNewJobName.getText().toString().equals("")) {
                         etNewJobName.setError("Must enter a name");
-                    }else if(etNewHoursWorked.getText().toString().equals(""))
-                    {
+                    }
+                    else if (etNewHoursWorked.getText().toString().equals("")) {
                         etNewHoursWorked.setError("Must enter a number of hours worked");
-                    }else if(etNewHourlyRate.getText().toString().equals(""))
-                    {
+                    }
+                    else if (etNewHourlyRate.getText().toString().equals("")) {
                         etNewHourlyRate.setError("Must enter an hourly rate");
-                    }else if(DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] +
+                    }
+                    else if (DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] +
                             Short.parseShort(etNewHoursWorked.getText().toString())
-                            > 24)
-                    {
+                            > 24) {
                         etNewHoursWorked.setError("Cannot work more than 24 hours per day");
                     }
 
                 }
-                });
+            });
             return true;
         }
-        else if(id == R.id.mbDeleteAll)
-        {
+        else if (id == R.id.mbDeleteAll) {
             AlertDialog.Builder adb = new AlertDialog.Builder(this);
             adb
                     .setCancelable(false)
                     .setIcon(android.R.drawable.ic_menu_delete)
                     .setTitle("Delete All Jobs")
                     .setMessage("Are you sure you want to delete all jobs?")
-                    .setPositiveButton("Delete All", new DialogInterface.OnClickListener()
-                    {
+                    .setPositiveButton("Delete All", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
-                            for (int i = 0; i <currentDays.length; i++)
-                            {
+                        public void onClick(DialogInterface dialog, int which) {
+                            for (int i = 0; i < currentDays.length; i++) {
                                 currentDays[i].getJAdapter().removeAll();
                             }
                             DaysFragment.updateTvWeeklyTotal(currentDays);
                         }
                     })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-                    {
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which)
-                        {
+                        public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
                         }
                     })
@@ -206,14 +191,12 @@ public class HoursActivity
     }
 
     @Override
-    public void getCurrentDay(Day currentDay)
-    {
+    public void getCurrentDay(Day currentDay) {
         this.currentDay = currentDay;
     }
 
     @Override
-    public void getSelectedDay(Day selectedDay)
-    {
+    public void getSelectedDay(Day selectedDay) {
         this.selectedDay = selectedDay;
         selectedDay.getJAdapter().setSelectedDay(selectedDay);
     }
@@ -224,9 +207,8 @@ public class HoursActivity
         selectedDay.getJAdapter().setDays(days);
     }
 
-    public void startUpdate()
-    {
-        selectedDay.getJAdapter().updateFields(this,selectedDay,currentDays);
+    public void startUpdate() {
+        selectedDay.getJAdapter().updateFields(selectedDay, currentDays);
         DaysFragment.updateTvWeeklyTotal(currentDays);
         DaysFragment.updateHoursForDays(currentDays);
 
@@ -234,31 +216,27 @@ public class HoursActivity
 
     @Override
     public void sendDate(Day selectedDay) {
-        CalendarFragment calendarFragment = (CalendarFragment)hoursPagerAdapter.getItem(1);
+        CalendarFragment calendarFragment = (CalendarFragment) hoursPagerAdapter.getItem(1);
         calendarFragment.recieveDate(selectedDay);
     }
 
     @Override
     public void onDateClicked(String day) {
-        DaysFragment daysFragment = (DaysFragment)hoursPagerAdapter.getItem(0);
+        DaysFragment daysFragment = (DaysFragment) hoursPagerAdapter.getItem(0);
         daysFragment.updateSelectedDay(day);
     }
 
-    public class HoursPagerAdapter extends FragmentPagerAdapter
-    {
+    public class HoursPagerAdapter extends FragmentPagerAdapter {
         SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
-        public HoursPagerAdapter(FragmentManager fm)
-        {
+        public HoursPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
-        public Fragment getItem(int position)
-        {
+        public Fragment getItem(int position) {
             Fragment newFragment = null;
-            switch (position)
-            {
+            switch (position) {
                 case 0:
                     newFragment = DaysFragment.getInstance();
                     break;
@@ -271,16 +249,13 @@ public class HoursActivity
         }
 
         @Override
-        public int getCount()
-        {
+        public int getCount() {
             return 2;
         }
 
         @Override
-        public CharSequence getPageTitle(int position)
-        {
-            switch (position)
-            {
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
                 case 0:
                     return "Day";
                 case 1:

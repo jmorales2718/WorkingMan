@@ -8,17 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
 
-import jmmacbook.android.workingman.HoursActivity;
 import jmmacbook.android.workingman.R;
 import jmmacbook.android.workingman.data.Day;
-import jmmacbook.android.workingman.data.Week;
 import jmmacbook.android.workingman.utils.DayCalculations;
 
 /**
  * Created by jmmacbook on 5/19/16.
  */
-public class CalendarFragment extends Fragment
-{
+public class CalendarFragment extends Fragment {
     CalendarView calendar;
 
     private static CalendarFragment instance;
@@ -26,7 +23,7 @@ public class CalendarFragment extends Fragment
     private OnDateClickedListener listener;
 
     public static CalendarFragment getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new CalendarFragment();
         }
         return instance;
@@ -34,52 +31,46 @@ public class CalendarFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View calendarLayout = inflater.inflate(R.layout.calendar_fragment, container, false);
         calendar = (CalendarView) calendarLayout.findViewById(R.id.calendar);
         initListener();
-        if(selectedDay != null) {
+        if (selectedDay != null) {
             setCalendarDate(selectedDay.getDayName());
         }
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener()
-        {
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth)
-            {
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 listener.onDateClicked(DayCalculations.getDayName(year, month, dayOfMonth));
             }
         });
         return calendarLayout;
     }
 
-    public void setCalendarDate(String date)
-    {
+    public void setCalendarDate(String date) {
         int indexOfComma = date.indexOf(',');
-        date = date.substring(indexOfComma+2);
+        date = date.substring(indexOfComma + 2);
         int preDaySpace = date.indexOf(' ');
         int monthVal = convertMonthStringToInt(date.substring(0, preDaySpace));
-        date = date.substring(preDaySpace+1);
+        date = date.substring(preDaySpace + 1);
         int postDayComma = date.indexOf(',');
-        int dayVal = Integer.parseInt(date.substring(0,postDayComma));
-        date = date.substring(date.indexOf(" ")+1);
+        int dayVal = Integer.parseInt(date.substring(0, postDayComma));
+        date = date.substring(date.indexOf(" ") + 1);
         int yearVal = Integer.parseInt(date);
 
-        long yearMillis = (yearVal - 1970)*(31556952000L);
+        long yearMillis = (yearVal - 1970) * (31556952000L);
         long monthMillis = (monthVal) * (2629746000L);
         long dayMillis = (dayVal) * (86400000L);
         long totalEpoch = yearMillis + monthMillis + dayMillis;
         calendar.setDate(totalEpoch);
     }
 
-    public void recieveDate (Day date){
+    public void recieveDate(Day date) {
         selectedDay = date;
     }
 
-    public static int convertMonthStringToInt(String month)
-    {
-        switch (month)
-        {
+    public static int convertMonthStringToInt(String month) {
+        switch (month) {
             case "January":
                 return 0;
             case "February":
@@ -109,7 +100,7 @@ public class CalendarFragment extends Fragment
     }
 
     public interface OnDateClickedListener {
-        public void onDateClicked(String Day);
+        void onDateClicked(String Day);
     }
 
 

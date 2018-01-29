@@ -102,15 +102,11 @@ public class JobsAdapter
         this.days = days;
     }
 
-    public Day getSelectedDay() {
-        return selectedDay;
-    }
-
     public void setSelectedDay(Day selectedDay) {
         this.selectedDay = selectedDay;
     }
 
-    public void updateFields(Context context, Day selectedDay, Day[] days) {
+    public void updateFields(Day selectedDay, Day[] days) {
         setSelectedDay(selectedDay);
         setDays(days);
         loadJobs(selectedDay.getDayName());

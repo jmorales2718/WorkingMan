@@ -2,14 +2,12 @@ package jmmacbook.android.workingman.data;
 
 import android.content.Context;
 
-import com.orm.SugarRecord;
-
 import jmmacbook.android.workingman.adapter.JobsAdapter;
 
 /**
  * Created by jmmacbook on 5/21/16.
  */
-public class Day{
+public class Day {
     private String dayName;
     private JobsAdapter jAdapter;
 

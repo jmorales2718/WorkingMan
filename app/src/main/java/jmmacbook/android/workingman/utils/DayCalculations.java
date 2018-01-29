@@ -1,6 +1,5 @@
 package jmmacbook.android.workingman.utils;
 
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,31 +14,31 @@ import jmmacbook.android.workingman.data.Day;
 
 public class DayCalculations {
 
-    public static int indexOfDayInWeek(Day day, Day[] currentDays){
+    public static int indexOfDayInWeek(Day day, Day[] currentDays) {
         for (int i = 0; i < currentDays.length; i++) {
-            if(day == currentDays[i]){
+            if (day == currentDays[i]) {
                 return i;
             }
         }
         return -1;
     }
 
-    public static int indexOfDayNameInWeek(String dayName, Day[] currentDays){
-        for(int i = 0; i < currentDays.length; i++){
-            if(dayName.equals(currentDays[i].getDayName())){
+    public static int indexOfDayNameInWeek(String dayName, Day[] currentDays) {
+        for (int i = 0; i < currentDays.length; i++) {
+            if (dayName.equals(currentDays[i].getDayName())) {
                 return i;
             }
         }
         return -1;
     }
 
-    public static String getDayName(int year, int month, int dayOfMonth){
+    public static String getDayName(int year, int month, int dayOfMonth) {
         String dayOfWeek = "";
-        String dateString = String.format("%d-%d-%d", year, month+1, dayOfMonth);
-        try{
+        String dateString = String.format("%d-%d-%d", year, month + 1, dayOfMonth);
+        try {
             Date date = new SimpleDateFormat("yyyy-M-d").parse(dateString);
             dayOfWeek = new SimpleDateFormat("EEEE, MMMM d, YYYY", Locale.ENGLISH).format(date);
-        }catch(ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
 

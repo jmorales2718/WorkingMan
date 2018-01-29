@@ -41,7 +41,7 @@ public class DaysFragment extends Fragment {
 
 
     public static DaysFragment getInstance() {
-        if(instance == null){
+        if (instance == null) {
             instance = new DaysFragment();
         }
         return instance;
@@ -99,7 +99,7 @@ public class DaysFragment extends Fragment {
         ibNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedDayIndex < Week.DAYSOFWEEK - 1) {
+                if (selectedDayIndex < Week.DAYS_OF_WEEK - 1) {
                     selectedDayIndex++;
                     tvSelectedDay.setText(currentWeek.getDay(selectedDayIndex).getDayName());
                     listener.getSelectedDay(currentWeek.getDay(selectedDayIndex));
@@ -137,7 +137,7 @@ public class DaysFragment extends Fragment {
 
     public static void updateTvWeeklyTotal(Day[] days) {
         totalMoneyMade = 0;
-        for (int i = 0; i < Week.DAYSOFWEEK; i++) {
+        for (int i = 0; i < Week.DAYS_OF_WEEK; i++) {
             List<Job> jobs = days[i].getJAdapter().getJobs();
             for (Job job : jobs) {
                 totalMoneyMade += job.getHourlyPay() * job.getHoursWorked();
@@ -154,20 +154,20 @@ public class DaysFragment extends Fragment {
     private SendCalendarDateListener calendarDateListener;
 
     public interface OnWeekCreatedListener {
-        public void getCurrentDay(Day currentDay);
+        void getCurrentDay(Day currentDay);
 
-        public void getSelectedDay(Day selectedDay);
+        void getSelectedDay(Day selectedDay);
     }
 
     public interface OnAdapterCreatedListener {
-        public void getDaysWeek(Day[] days);
+        void getDaysWeek(Day[] days);
     }
 
     public interface SendCalendarDateListener {
-        public void sendDate(Day selectedDay);
+        void sendDate(Day selectedDay);
     }
 
-    public void updateSelectedDay(String dayString){
+    public void updateSelectedDay(String dayString) {
         selectedDayIndex = DayCalculations.indexOfDayNameInWeek(dayString, currentDays);
         tvSelectedDay.setText(currentWeek.getDay(selectedDayIndex).getDayName());
         listener.getSelectedDay(currentWeek.getDay(selectedDayIndex));
