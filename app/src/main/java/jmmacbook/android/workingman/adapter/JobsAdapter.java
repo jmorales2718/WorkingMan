@@ -34,7 +34,7 @@ public class JobsAdapter
 
     public JobsAdapter(Context context) {
         this.context = context;
-        jobs.size();
+//        jobs.size();
     }
 
     @Override

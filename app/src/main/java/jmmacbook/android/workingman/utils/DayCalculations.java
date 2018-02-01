@@ -3,7 +3,9 @@ package jmmacbook.android.workingman.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import jmmacbook.android.workingman.data.Day;
@@ -13,6 +15,88 @@ import jmmacbook.android.workingman.data.Day;
  */
 
 public class DayCalculations {
+
+    public static Calendar c = Calendar.getInstance();
+
+    public static int getDayOfWeekFromDay(Day day){
+        String dayName = day.getDayName();
+        dayName = dayName.substring(0, dayName.indexOf(','));
+        return getDayOfWeek(dayName);
+    }
+
+    public static int getDayOfMonthFromDay(Day day){
+        String dayName = day.getDayName();
+        dayName = dayName.substring(dayName.indexOf(' ')+1);
+        dayName = dayName.substring(dayName.indexOf(' ')+1);
+        dayName = dayName.substring(0, dayName.indexOf(','));
+        return Integer.parseInt(dayName);
+    }
+
+    public static int getMonthFromDay(Day day){
+        String dayName = day.getDayName();
+        dayName = dayName.substring(dayName.indexOf(' ')+1);
+        dayName = dayName.substring(0, dayName.indexOf(' '));
+        return getMonthOfYear(dayName);
+    }
+
+    public static int getYearFromDay(Day day){
+        String dayName = day.getDayName();
+        dayName = dayName.substring(dayName.lastIndexOf(' ')+1);
+        return Integer.parseInt(dayName);
+    }
+
+    public static int getDayOfWeek(String dayOfWeek){
+        switch (dayOfWeek){
+            case "Sunday":
+                return 1;
+            case "Monday":
+                return 2;
+            case "Tuesday":
+                return 3;
+            case "Wednesday":
+                return 4;
+            case "Thursday":
+                return 5;
+            case "Friday":
+                return 6;
+            case "Saturday":
+                return 7;
+            default:
+                return -1;
+        }
+    }
+
+    public static int getMonthOfYear(String month){
+        switch (month){
+            case "January":
+                return 0;
+            case "February":
+                return 1;
+            case "March":
+                return 2;
+            case "April":
+                return 3;
+            case "May":
+                return 4;
+            case "June":
+                return 5;
+            case "July":
+                return 6;
+            case "August":
+                return 7;
+            case "September":
+                return 8;
+            case "October":
+                return 9;
+            case "November":
+                return 10;
+            case "December":
+                return 11;
+            default:
+                return -1;
+
+        }
+    }
 
     public static int indexOfDayInWeek(Day day, Day[] currentDays) {
         for (int i = 0; i < currentDays.length; i++) {
@@ -43,6 +127,169 @@ public class DayCalculations {
         }
 
         return dayOfWeek;
+    }
+
+    public static String getDayOfWeek(int dOWInt) {
+        String dayOfWeek;
+        int dOW = dOWInt;
+        if (dOW == 1) {
+            dayOfWeek = "Sunday";
+        }
+        else if (dOW == 2) {
+            dayOfWeek = "Monday";
+        }
+        else if (dOW == 3) {
+            dayOfWeek = "Tuesday";
+        }
+        else if (dOW == 4) {
+            dayOfWeek = "Wednesday";
+        }
+        else if (dOW == 5) {
+            dayOfWeek = "Thursday";
+        }
+        else if (dOW == 6) {
+            dayOfWeek = "Friday";
+        }
+        else {
+            dayOfWeek = "Saturday";
+        }
+        return dayOfWeek;
+    }
+
+    public static String getMonthOfYear(int mOYInt) {
+        String monthOfYear = null;
+        int mOY = mOYInt;
+        switch (mOY) {
+            case 0:
+                monthOfYear = "January";
+                break;
+            case 1:
+                monthOfYear = "February";
+                break;
+            case 2:
+                monthOfYear = "March";
+                break;
+            case 3:
+                monthOfYear = "April";
+                break;
+            case 4:
+                monthOfYear = "May";
+                break;
+            case 5:
+                monthOfYear = "June";
+                break;
+            case 6:
+                monthOfYear = "July";
+                break;
+            case 7:
+                monthOfYear = "August";
+                break;
+            case 8:
+                monthOfYear = "September";
+                break;
+            case 9:
+                monthOfYear = "October";
+                break;
+            case 10:
+                monthOfYear = "November";
+                break;
+            case 11:
+                monthOfYear = "December";
+                break;
+        }
+        return monthOfYear;
+    }
+
+    public static String getYear(int yInt) {
+        String year;
+        int y = yInt;
+        year = String.valueOf(y);
+        return year;
+    }
+
+    public static String getDayOfMonth(int dOMInt) {
+
+        String dayOfMonth;
+        int dOM = dOMInt;
+        dayOfMonth = String.valueOf(dOM);
+        return dayOfMonth;
+    }
+
+    public static int getNumDaysInMonth(int month) {
+        int currentYear = 0;
+        int currentDay = 0;
+        Calendar temp;
+        int monthOfYear = -1;
+        int mOY = month;
+        switch (mOY) {
+            case 0:
+                temp = new GregorianCalendar(currentYear, Calendar.JANUARY, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 1:
+                temp = new GregorianCalendar(currentYear, Calendar.FEBRUARY, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 2:
+                temp = new GregorianCalendar(currentYear, Calendar.MARCH, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 3:
+                temp = new GregorianCalendar(currentYear, Calendar.APRIL, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 4:
+                temp = new GregorianCalendar(currentYear, Calendar.MAY, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 5:
+                temp = new GregorianCalendar(currentYear, Calendar.JUNE, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 6:
+                temp = new GregorianCalendar(currentYear, Calendar.JULY, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 7:
+                temp = new GregorianCalendar(currentYear, Calendar.AUGUST, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 8:
+                temp = new GregorianCalendar(currentYear, Calendar.SEPTEMBER, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 9:
+                temp = new GregorianCalendar(currentYear, Calendar.OCTOBER, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 10:
+                temp = new GregorianCalendar(currentYear, Calendar.NOVEMBER, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+            case 11:
+                temp = new GregorianCalendar(currentYear, Calendar.DECEMBER, currentDay);
+                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
+                break;
+        }
+        return monthOfYear;
+    }
+
+    public static int getNextMonth(int currentMonth) {
+        if (currentMonth == 12) {
+            return 0;
+        }
+        else {
+            return currentMonth + 1;
+        }
+    }
+
+    public static int getPreviousMonth(int currentMonth) {
+        if (currentMonth == 0) {
+            return 11;
+        }
+        else {
+            return currentMonth - 1;
+        }
     }
 
 //    public static String convertMonthIndexToMonth(int indexOfMonth){

@@ -12,7 +12,9 @@ public class Day {
     private JobsAdapter jAdapter;
 
     public Day(Context context) {
-        jAdapter = new JobsAdapter(context);
+        if(jAdapter == null) {
+            jAdapter = new JobsAdapter(context);
+        }
     }
 
     public String getDayName() {

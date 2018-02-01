@@ -63,7 +63,7 @@ public class DaysFragment extends Fragment {
             currentWeek.setDaysWeek(currentDays);
         }
 
-        selectedDayIndex = currentWeek.currentDay() - 1;
+        selectedDayIndex = currentWeek.currentDayOfWeek() - 1;
 
         tvSelectedDay.setText(currentWeek.getDay(selectedDayIndex).getDayName());
         initListener();
