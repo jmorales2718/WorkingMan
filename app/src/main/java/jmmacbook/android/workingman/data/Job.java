@@ -18,6 +18,8 @@ public class Job
     private String dayOfJob;
     private JobsAdapter jobsAdapter;
 
+    public Job(){} //Need empty constructor for Database
+
     public Job(JobsAdapter jobsAdapter) {
         this.jobsAdapter = jobsAdapter;
     }
@@ -48,5 +50,17 @@ public class Job
 
     public void setDayOfJob(String dayOfJob) {
         this.dayOfJob = dayOfJob;
+    }
+
+    public String getDayOfJob() {
+        return dayOfJob;
+    }
+
+    public JobsAdapter getJobsAdapter() {
+        return jobsAdapter;
+    }
+
+    public void setJobsAdapter(JobsAdapter jobsAdapter) {
+        this.jobsAdapter = jobsAdapter;
     }
 }

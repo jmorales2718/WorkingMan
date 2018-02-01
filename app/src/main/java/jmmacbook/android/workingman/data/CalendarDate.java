@@ -2,7 +2,6 @@ package jmmacbook.android.workingman.data;
 
 import java.util.Calendar;
 
-import jmmacbook.android.workingman.HoursActivity;
 import jmmacbook.android.workingman.utils.DayCalculations;
 
 /**
@@ -26,9 +25,9 @@ public class CalendarDate {
         setDayOfMonth(c.get(Calendar.DAY_OF_MONTH));
         setMonth(c.get(Calendar.MONTH));
         setYear(c.get(Calendar.YEAR));
-        setDaysInMonth(DayCalculations.getNumDaysInMonth(c.get(Calendar.MONTH)));
-        setNextMonth(DayCalculations.getNextMonth(c.get(Calendar.MONTH)));
-        setDaysInPreviousMonth(DayCalculations.getNumDaysInMonth(DayCalculations.getPreviousMonth(c.get(Calendar.MONTH))));
+        setDaysInMonth(DayCalculations.getNumDaysInMonth(getMonth(), getYear() , getDayOfMonth()));
+        setNextMonth(DayCalculations.getNextMonth(getMonth()));
+        setDaysInPreviousMonth(DayCalculations.getNumDaysInMonth(DayCalculations.getPreviousMonth(getMonth()), getYear(), getDayOfMonth() ));
     };
 
     public CalendarDate(Day day){
@@ -37,10 +36,10 @@ public class CalendarDate {
         setDayOfMonth(DayCalculations.getDayOfMonthFromDay(day));
         setMonth(DayCalculations.getMonthFromDay(day));
         setYear(DayCalculations.getYearFromDay(day));
-        setDaysInMonth(DayCalculations.getNumDaysInMonth(getMonth()));
+        setDaysInMonth(DayCalculations.getNumDaysInMonth(getMonth(), getYear(), getDayOfMonth()));
         setNextMonth(DayCalculations.getNextMonth(getMonth()));
         setDaysInPreviousMonth(DayCalculations.getNumDaysInMonth(
-                DayCalculations.getPreviousMonth(getMonth())));
+                DayCalculations.getPreviousMonth(getMonth()), getYear(), getDayOfMonth()));
 
     }
 

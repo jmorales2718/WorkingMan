@@ -2,6 +2,7 @@ package jmmacbook.android.workingman;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -78,88 +79,98 @@ public class HoursActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.mbAddJob) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            final LayoutInflater inflater = getLayoutInflater();
-            final View layoutView = inflater.inflate(R.layout.dialog_layout, null);
+            if(DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] == 24){
+                Snackbar.make(findViewById(android.R.id.content).getRootView(),
+                        "Max number of hours already worked for this day",
+                        Snackbar.LENGTH_LONG).show();
+            }else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final LayoutInflater inflater = getLayoutInflater();
+                final View layoutView = inflater.inflate(R.layout.dialog_layout, null);
 
-            etNewJobName = (EditText) layoutView.findViewById(R.id.etJobName);
-            etNewHoursWorked = (EditText) layoutView.findViewById(R.id.etHoursWorked);
-            etNewHourlyRate = (EditText) layoutView.findViewById(R.id.etDollarsPerHour);
-            builder
-                    .setView(layoutView)
-                    .setTitle("Add New Job")
-                    .setIcon(android.R.drawable.ic_menu_add)
-                    .setPositiveButton("Add Job", null)
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
+                etNewJobName = (EditText) layoutView.findViewById(R.id.etJobName);
+                etNewHoursWorked = (EditText) layoutView.findViewById(R.id.etHoursWorked);
+                etNewHourlyRate = (EditText) layoutView.findViewById(R.id.etDollarsPerHour);
+                builder
+                        .setView(layoutView)
+                        .setTitle("Add New Job")
+                        .setIcon(android.R.drawable.ic_menu_add)
+                        .setPositiveButton("Add Job", null)
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!etNewJobName.getText().toString().equals("") &&
+                                !etNewHoursWorked.getText().toString().equals("") &&
+                                !etNewHourlyRate.getText().toString().equals("") &&
+                                DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] +
+                                        Short.parseShort(etNewHoursWorked.getText().toString())
+                                        <= 24 &&
+                                Short.parseShort(etNewHoursWorked.getText().toString()) > 0) {
+                            newJobName = etNewJobName.getText().toString();
+                            newHoursWorked = etNewHoursWorked.getText().toString();
+                            newHourlyRate = etNewHourlyRate.getText().toString();
+                            Job j = new Job(selectedDay.getJAdapter());
+                            j.setJobName(newJobName);
+                            j.setHoursWorked(Integer.parseInt(newHoursWorked));
+                            j.setHourlyPay(Integer.parseInt(newHourlyRate));
+                            j.setDayOfJob(selectedDay.getDayName());
+                            selectedDay.getJAdapter().addJob(j);
+                            selectedDay.getJAdapter().notifyDataSetChanged();
+                            DaysFragment.updateTvWeeklyTotal(selectedDay.getJAdapter().getDays());
+                            alertDialog.dismiss();
                         }
-                    });
-            final AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+                        else if (etNewJobName.getText().toString().equals("") &&
+                                etNewHoursWorked.getText().toString().equals("") &&
+                                etNewHourlyRate.getText().toString().equals("")) {
+                            etNewJobName.setError("Must enter a name");
+                            etNewHoursWorked.setError("Must enter a number of hours worked");
+                            etNewHourlyRate.setError("Must enter an hourly rate");
+                        }
+                        else if (etNewJobName.getText().toString().equals("") &&
+                                etNewHoursWorked.getText().toString().equals("")) {
+                            etNewJobName.setError("Must enter a name");
+                            etNewHoursWorked.setError("Must enter a number of hours worked");
+                        }
+                        else if (etNewJobName.getText().toString().equals("") &&
+                                etNewHourlyRate.getText().toString().equals("")) {
+                            etNewJobName.setError("Must enter a name");
+                            etNewHourlyRate.setError("Must enter an hourly rate");
+                        }
+                        else if (etNewHoursWorked.getText().toString().equals("") &&
+                                etNewHourlyRate.getText().toString().equals("")) {
+                            etNewHoursWorked.setError("Must enter a number of hours worked");
+                            etNewHourlyRate.setError("Must enter an hourly rate");
+                        }
+                        else if (etNewJobName.getText().toString().equals("")) {
+                            etNewJobName.setError("Must enter a name");
+                        }
+                        else if (etNewHoursWorked.getText().toString().equals("")) {
+                            etNewHoursWorked.setError("Must enter a number of hours worked");
+                        }
+                        else if (etNewHourlyRate.getText().toString().equals("")) {
+                            etNewHourlyRate.setError("Must enter an hourly rate");
+                        }
+                        else if (DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] +
+                                Short.parseShort(etNewHoursWorked.getText().toString())
+                                > 24) {
+                            etNewHoursWorked.setError("Cannot work more than 24 hours per day");
+                        }
+                        else if (Short.parseShort(etNewHoursWorked.getText().toString()) <= 0) {
+                            etNewHoursWorked.setError("Cannot work 0 hours or less for a job");
+                        }
 
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!etNewJobName.getText().toString().equals("") &&
-                            !etNewHoursWorked.getText().toString().equals("") &&
-                            !etNewHourlyRate.getText().toString().equals("") &&
-                            DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] +
-                                    Short.parseShort(etNewHoursWorked.getText().toString())
-                                    <= 24) {
-                        newJobName = etNewJobName.getText().toString();
-                        newHoursWorked = etNewHoursWorked.getText().toString();
-                        newHourlyRate = etNewHourlyRate.getText().toString();
-                        Job j = new Job(selectedDay.getJAdapter());
-                        j.setJobName(newJobName);
-                        j.setHoursWorked(Integer.parseInt(newHoursWorked));
-                        j.setHourlyPay(Integer.parseInt(newHourlyRate));
-                        j.setDayOfJob(selectedDay.getDayName());
-                        selectedDay.getJAdapter().addJob(j);
-                        selectedDay.getJAdapter().notifyDataSetChanged();
-                        DaysFragment.updateTvWeeklyTotal(selectedDay.getJAdapter().getDays());
-                        alertDialog.dismiss();
                     }
-                    else if (etNewJobName.getText().toString().equals("") &&
-                            etNewHoursWorked.getText().toString().equals("") &&
-                            etNewHourlyRate.getText().toString().equals("")) {
-                        etNewJobName.setError("Must enter a name");
-                        etNewHoursWorked.setError("Must enter a number of hours worked");
-                        etNewHourlyRate.setError("Must enter an hourly rate");
-                    }
-                    else if (etNewJobName.getText().toString().equals("") &&
-                            etNewHoursWorked.getText().toString().equals("")) {
-                        etNewJobName.setError("Must enter a name");
-                        etNewHoursWorked.setError("Must enter a number of hours worked");
-                    }
-                    else if (etNewJobName.getText().toString().equals("") &&
-                            etNewHourlyRate.getText().toString().equals("")) {
-                        etNewJobName.setError("Must enter a name");
-                        etNewHourlyRate.setError("Must enter an hourly rate");
-                    }
-                    else if (etNewHoursWorked.getText().toString().equals("") &&
-                            etNewHourlyRate.getText().toString().equals("")) {
-                        etNewHoursWorked.setError("Must enter a number of hours worked");
-                        etNewHourlyRate.setError("Must enter an hourly rate");
-                    }
-                    else if (etNewJobName.getText().toString().equals("")) {
-                        etNewJobName.setError("Must enter a name");
-                    }
-                    else if (etNewHoursWorked.getText().toString().equals("")) {
-                        etNewHoursWorked.setError("Must enter a number of hours worked");
-                    }
-                    else if (etNewHourlyRate.getText().toString().equals("")) {
-                        etNewHourlyRate.setError("Must enter an hourly rate");
-                    }
-                    else if (DaysFragment.getHoursForDays()[DayCalculations.indexOfDayInWeek(selectedDay, currentDays)] +
-                            Short.parseShort(etNewHoursWorked.getText().toString())
-                            > 24) {
-                        etNewHoursWorked.setError("Cannot work more than 24 hours per day");
-                    }
-
-                }
-            });
+                });
+            }
             return true;
         }
         else if (id == R.id.mbDeleteAll) {

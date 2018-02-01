@@ -114,7 +114,7 @@ public class Week
             }else{
                 yearOfFirstWeekday = date.getYear();
             }
-            dayOfMonthForFirstWeekday = date.getDaysInPreviousMonth() - dayOfMonthForFirstWeekday;
+            dayOfMonthForFirstWeekday = date.getDaysInPreviousMonth() + dayOfMonthForFirstWeekday;
         // first day of the week must be in current month
         }else{
             monthOfFirstWeekday = date.getMonth();
