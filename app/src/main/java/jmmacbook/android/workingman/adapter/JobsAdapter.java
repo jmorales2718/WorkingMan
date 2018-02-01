@@ -34,7 +34,6 @@ public class JobsAdapter
 
     public JobsAdapter(Context context) {
         this.context = context;
-//        jobs.size();
     }
 
     @Override
@@ -90,6 +89,10 @@ public class JobsAdapter
         jobs = Job.find(Job.class, "day_of_job= ?", dayName);
     }
 
+    public void loadJobs(String dayName, int position) {
+        days[position].getJAdapter().jobs = Job.find(Job.class, "day_of_job= ?", dayName);
+    }
+
     public List<Job> getJobs() {
         return jobs;
     }
@@ -109,7 +112,9 @@ public class JobsAdapter
     public void updateFields(Day selectedDay, Day[] days) {
         setSelectedDay(selectedDay);
         setDays(days);
-        loadJobs(selectedDay.getDayName());
+        for (int i = 0; i < days.length; i++) {
+            loadJobs(days[i].getDayName(), i);
+        }
     }
 
 

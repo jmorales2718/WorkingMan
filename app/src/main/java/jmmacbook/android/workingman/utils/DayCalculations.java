@@ -221,56 +221,6 @@ public class DayCalculations {
         temp = new GregorianCalendar(year, month, dayOfMonth);
         maxDaysInMonth = temp.getActualMaximum(temp.DAY_OF_MONTH);
         return maxDaysInMonth;
-//            case 0:
-//                temp = new GregorianCalendar(year, Calendar.JANUARY, dayOfMonth);
-//                monthOfYear = temp.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 1:
-//                temp = new GregorianCalendar(year, Calendar.FEBRUARY, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 2:
-//                temp = new GregorianCalendar(year, Calendar.MARCH, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 3:
-//                temp = new GregorianCalendar(year, Calendar.APRIL, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 4:
-//                temp = new GregorianCalendar(year, Calendar.MAY, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 5:
-//                temp = new GregorianCalendar(year, Calendar.JUNE, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 6:
-//                temp = new GregorianCalendar(year, Calendar.JULY, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 7:
-//                temp = new GregorianCalendar(year, Calendar.AUGUST, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 8:
-//                temp = new GregorianCalendar(year, Calendar.SEPTEMBER, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 9:
-//                temp = new GregorianCalendar(year, Calendar.OCTOBER, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 10:
-//                temp = new GregorianCalendar(year, Calendar.NOVEMBER, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//            case 11:
-//                temp = new GregorianCalendar(year, Calendar.DECEMBER, dayOfMonth);
-//                monthOfYear = c.getActualMaximum(temp.DAY_OF_MONTH);
-//                break;
-//        }
-//        return maxDaysInMonth;
     }
 
     public static int getNextMonth(int currentMonth) {
